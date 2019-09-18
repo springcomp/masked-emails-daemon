@@ -1,0 +1,29 @@
+image: ubuntu
+
+before_build:
+  - sh: sudo apt-get update
+  - sh: sudo apt-get install -y fakeroot
+
+build_script:
+  - sh: dotnet test /home/appveyor/projects/masked-emails-daemon/tests/maskedd-tests/
+  - sh: dotnet publish -c Release /home/appveyor/projects/masked-emails-daemon/src/ --self-contained --runtime linux-x64 --output /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/
+
+after_build:
+  - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/config
+  - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postinst
+  - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postrm
+  - sh: fakeroot dpkg --build /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon
+
+artifacts:
+  - path: '**\*deb'
+    type: file
+
+deploy:
+  provider: AzureBlob
+  storage_account_name: masked
+  storage_access_key:
+    secure: xgb9tBmhTWgMpmwhpauTdDsVrSezLCXBp9EWwN9rNvAIdSMIEbBwpHmnjushM5oex5ipUwDK9f8+VIZs3QIp12KFMeTDmtLW2tFcycSl3tUK3Kf4+sPGvGene6ApQvHu
+  container: debian
+  artifact: masked-emails-daemon.deb
+  unzip: false
+  set_content_type: false
