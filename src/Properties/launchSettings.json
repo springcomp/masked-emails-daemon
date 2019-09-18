@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "maskedd": {
+      "commandName": "Project",
+      "commandLineArgs": "maskedbox.space 1",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
