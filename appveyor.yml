@@ -2,16 +2,21 @@ image: ubuntu
 
 before_build:
   - sh: sudo apt-get update
-  - sh: sudo apt-get install -y fakeroot
+  - sh: sudo apt-get install -y fakeroot dos2unix
 
 build_script:
   - sh: dotnet test /home/appveyor/projects/masked-emails-daemon/tests/maskedd-tests/
   - sh: dotnet publish -c Release /home/appveyor/projects/masked-emails-daemon/src/ --self-contained --runtime linux-x64 --output /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/
 
 after_build:
+  - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/etc/init.d/masked-emails
+  - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/config
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/config
+  - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postinst
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postinst
+  - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postrm
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postrm
+  - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/prerm
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/prerm
   - sh: fakeroot dpkg --build /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon
 
