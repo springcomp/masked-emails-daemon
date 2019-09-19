@@ -1,0 +1,5 @@
+#!/bin/sh
+#!/bin/sh
+
+/etc/init.d/masked-emails stop
+update-rc.d -f masked-emails remove

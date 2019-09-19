@@ -4,3 +4,5 @@
 \.vscode/
 
 \*.deb
+
+masked\-emails\-daemon/opt/

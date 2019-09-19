@@ -12,6 +12,7 @@ after_build:
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/config
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postinst
   - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/postrm
+  - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/prerm
   - sh: fakeroot dpkg --build /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon
 
 artifacts:
