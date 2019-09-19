@@ -1,12 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Reflection;
 using MaskedEmails.Extensions.Logging.Syslog;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Syslog.Framework.Logging;
 
-namespace maskedd
+namespace MaskedEmails
 {
     public static class HostBuilderExtensions
     {
@@ -19,39 +20,34 @@ namespace maskedd
                     builder.AddAzureStorage(options => { options.BatchSize = 1; });
                 });
         }
-        public static IHostBuilder ConfigureLogging(this IHostBuilder host, LogLevel level)
+        public static IHostBuilder ConfigureLogging(this IHostBuilder host)
         {
             return host
                 .ConfigureLogging((hostContext, config) =>
                 {
-                    config.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
+                    var logging = hostContext.Configuration.GetSection("Logging");
+
+                    config.AddConfiguration(logging);
                     config.AddConsole();
-                    config.AddSyslog(level);
+                    config.AddSyslog(hostContext);
                 });
         }
 
-        public static IHostBuilder ConfigureServices(this IHostBuilder host, LogLevel level)
+        public static IHostBuilder ConfigureServices(this IHostBuilder host)
         {
             return host
                 .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddLogging(builder =>
                     {
-                        var s = hostContext.Configuration.GetSection("Logging");
-                        var c = s.GetSection("Console");
-                        var d = c.GetValue(typeof(String), "LogLevel");
-                        builder.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
-                        builder.AddConsole();
-                        builder.AddSyslog(level);
                     });
-                });
         }
         public static IHostBuilder ConfigureAppConfiguration(this IHostBuilder host, string[] args)
         {
             return host
                 .ConfigureAppConfiguration((hostContext, builder) =>
                 {
-                    builder.SetBasePath(Directory.GetCurrentDirectory());
+                    var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? Directory.GetCurrentDirectory();
+                    builder.SetBasePath(directory);
+
                     builder.AddEnvironmentVariables(prefix: "ASPNETCORE_");
                     builder.AddJsonFile($"appsettings.json", true);
                     builder.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", true);

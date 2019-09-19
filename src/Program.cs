@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace maskedd
+namespace MaskedEmails
 {
     class Program
     {
@@ -16,15 +19,12 @@ namespace maskedd
 
         private static async Task MainAsync(string[] args)
         {
-            var cmdLine = CommandLine.Parse(args);
-            var level = cmdLine.Level;
-
             var host = new HostBuilder()
                     .UseConsoleLifetime() // Handle CTRL+C
                     .ConfigureHostConfiguration(args)
                     .ConfigureAppConfiguration(args)
-                    .ConfigureLogging(level)
-                    .ConfigureServices(level)
+                    .ConfigureLogging()
+                    .ConfigureServices()
                     .ConfigureWebJobs()
                     .Build()
                 ;

@@ -17,7 +17,9 @@ namespace MaskedEmails.Commands
                 if (jObject.StringExists("command"))
                 {
                     var command = jObject["command"].Value<string>();
-                    var action = ParseEnum(command);
+                    if (!TryParseEnum(command, out var action))
+                        return null;
+
                     switch (action)
                     {
                         case MaskedEmailAction.AddMaskedEmail:
@@ -29,17 +31,26 @@ namespace MaskedEmails.Commands
                         case MaskedEmailAction.RemoveMaskedEmail:
                             return JsonConvert.DeserializeObject<RemoveMaskedEmailCommand>(json);
                         default:
-                            System.Diagnostics.Debug.Assert(false);
-                            throw Error.InvalidMaskedEmailCommandAction(command);
+                            return null;
                     }
                 }
 
                 throw Error.InvalidMaskedEmailCommandFormat(json);
             }
 
-            private static MaskedEmailAction ParseEnum(string enumMember)
+            private static bool TryParseEnum(string enumMember, out MaskedEmailAction action)
             {
-                return JsonConvert.DeserializeObject<MaskedEmailAction>("\"" + enumMember + "\"", new StringEnumConverter());
+                action = MaskedEmailAction.Unknown;
+
+                try
+                {
+                    action = JsonConvert.DeserializeObject<MaskedEmailAction>("\"" + enumMember + "\"", new StringEnumConverter());
+                    return true;
+                }
+                catch(JsonSerializationException)
+                {
+                    return false;
+                }
             }
         }
     }

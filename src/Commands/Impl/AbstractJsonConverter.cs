@@ -26,7 +26,7 @@ namespace MaskedEmails.Commands.Impl
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof (T).IsAssignableFrom(objectType);
+            return typeof(T).IsAssignableFrom(objectType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -34,7 +34,8 @@ namespace MaskedEmails.Commands.Impl
             var jObject = JObject.Load(reader);
 
             var target = Create(objectType, jObject);
-            serializer.Populate(jObject.CreateReader(), target);
+            if (target != null)
+                serializer.Populate(jObject.CreateReader(), target);
 
             return target;
         }
