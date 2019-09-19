@@ -1,9 +1,18 @@
 #!/bin/sh
 
+## configuring rsyslog redirection
+
+touch /var/log/masked-emails.log
+chown syslog:adm /var/log/masked-emails.log
+
+echo -e "\nlocal0.*         /var/log/masked-emails.log" >>/etc/rsyslog.d/50-default.conf
+
+/etc/init.d/rsyslog restart
+
+## configuring service
+
 chmod 0755 /etc/init.d/masked-emails
 
 systemctl daemon-reload
 /etc/init.d/masked-emails start
 update-rc.d masked-emails defaults
-
-echo -e "\nlocal0.*         /var/log/masked-emails.log"
