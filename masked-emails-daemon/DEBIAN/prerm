@@ -1,5 +1,9 @@
 #!/bin/sh
-#!/bin/sh
 
 /etc/init.d/masked-emails stop
 update-rc.d -f masked-emails remove
+
+echo "\033[91mFor security reasons, the removal does not revert rsyslog configuration.\033[0m"
+echo "\033[91mYou might want to run the following lines:\033[0m"
+echo "\033[93m~# cat /etc/rsyslog.d/50-default.conf | grep -v \"masked-emails\" >/tmp/50-default.conf\033[0m"
+echo "\033[93m~# mv /tmp/50-default.conf /etc/rsyslog.d/50-default.conf\033[0m"

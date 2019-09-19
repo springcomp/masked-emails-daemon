@@ -5,3 +5,5 @@ chmod 0755 /etc/init.d/masked-emails
 systemctl daemon-reload
 /etc/init.d/masked-emails start
 update-rc.d masked-emails defaults
+
+echo -e "\nlocal0.*         /var/log/masked-emails.log"
