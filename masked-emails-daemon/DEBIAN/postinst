@@ -13,6 +13,8 @@ echo "local3.*         /var/log/masked-emails.log" >>/etc/rsyslog.d/50-default.c
 
 ## configuring service
 
+ln -s /lib/systemd/system/masked-emails.service /etc/systemd/system/masked-emails.service
+
 chmod 0755 /etc/init.d/masked-emails
 
 systemctl daemon-reload
