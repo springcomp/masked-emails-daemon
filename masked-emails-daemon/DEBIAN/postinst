@@ -5,7 +5,9 @@
 touch /var/log/masked-emails.log
 chown syslog:adm /var/log/masked-emails.log
 
-echo -e "\nlocal0.*         /var/log/masked-emails.log" >>/etc/rsyslog.d/50-default.conf
+echo "# Logging for masked-emails"                 >>/etc/rsyslog.d/50-default.conf
+echo "#"                                           >>/etc/rsyslog.d/50-default.conf
+echo "local3.*         /var/log/masked-emails.log" >>/etc/rsyslog.d/50-default.conf
 
 /etc/init.d/rsyslog restart
 
