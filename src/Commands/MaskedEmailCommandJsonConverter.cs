@@ -30,6 +30,8 @@ namespace MaskedEmails.Commands
                             return JsonConvert.DeserializeObject<DisableMaskedEmailCommand>(json);
                         case MaskedEmailAction.RemoveMaskedEmail:
                             return JsonConvert.DeserializeObject<RemoveMaskedEmailCommand>(json);
+                        case MaskedEmailAction.ChangeMaskedEmailPassword:
+                            return JsonConvert.DeserializeObject<ChangeMaskedEmailPasswordCommand>(json);
                         default:
                             return null;
                     }

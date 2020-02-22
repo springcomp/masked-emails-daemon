@@ -10,7 +10,7 @@ __Warning__: The package available publicly has a connection string to an Azure 
 # How-to Install
 
 ```
-~# curl -o masked-emails-daemon https://masked.blob.core.windows.net/debian/masked-emails-daemon.deb
+~# wget https://masked.blob.core.windows.net/debian/masked-emails-daemon.deb
 ~# dpkg -i masked-emails-daemon.deb
 ```
 

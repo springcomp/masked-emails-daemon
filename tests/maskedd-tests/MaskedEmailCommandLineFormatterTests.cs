@@ -47,5 +47,17 @@ namespace maskedd_tests
             Assert.AreEqual(1, commandLines.Length);
             Assert.AreEqual("/usr/local/bin/set-masked-email -address m123456@domain.com -disable", commandLines[0]);
         }
+        [Test]
+        public void ChangeMaskedEmailPasswordCommand_FormatCommandLine()
+        {
+            var command = new ChangeMaskedEmailPasswordCommand("m123456@domain.com")
+            {
+                PasswordHash = "password-hash"
+            };
+            var commandLines = MaskedEmailCommandLineFormatter.Format(command);
+
+            Assert.AreEqual(1, commandLines.Length);
+            Assert.AreEqual("/usr/local/bin/change-masked-email-password -address m123456@domain.com -passwordHash password-hash -force", commandLines[0]);
+        }
     }
 }

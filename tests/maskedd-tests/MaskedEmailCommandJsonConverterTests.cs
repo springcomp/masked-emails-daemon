@@ -60,5 +60,21 @@ namespace maskedd_tests
             var c = o as DisableMaskedEmailCommand;
             Assert.AreEqual(command.Address, c.Address);
         }
+        [Test]
+        public void ChangeMaskedEmailPassword_DeserializeObject()
+        {
+            var command = new ChangeMaskedEmailPasswordCommand("m123456@domain.com"){
+                PasswordHash = "password-hash",
+            };
+
+            var text = MaskedEmailCommandJsonConvert.SerializeObject(command);
+
+            var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
+            Assert.AreEqual(o.Action, command.Action);
+
+            var c = o as ChangeMaskedEmailPasswordCommand;
+            Assert.AreEqual(command.Address, c.Address);
+            Assert.AreEqual(command.PasswordHash, c.PasswordHash);
+        }
     }
 }

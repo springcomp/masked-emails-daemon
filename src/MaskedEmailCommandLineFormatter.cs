@@ -28,6 +28,10 @@ namespace MaskedEmails
             {
                 return new[] { $"/usr/local/bin/set-masked-email -address {command.Address} -disable", };
             }
+            if (command is ChangeMaskedEmailPasswordCommand changeMaskedEmailPasswordCommand)
+            {
+                return new[] { $"/usr/local/bin/change-masked-email-password -address {command.Address} -passwordHash {changeMaskedEmailPasswordCommand.PasswordHash} -force", };
+            }
 
             System.Diagnostics.Debug.Assert(false);
             throw new NotImplementedException();

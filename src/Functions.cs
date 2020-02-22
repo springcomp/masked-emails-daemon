@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using MaskedEmails;
 using MaskedEmails.Commands;
 using Microsoft.Azure.WebJobs;

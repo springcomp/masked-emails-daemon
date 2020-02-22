@@ -15,6 +15,8 @@ namespace MaskedEmails.Commands
         DisableMaskedEmail,
         [EnumMember(Value = "remove-masked-email")]
         RemoveMaskedEmail,
+        [EnumMember(Value = "change-masked-email-password")]
+        ChangeMaskedEmailPassword,
         [EnumMember(Value = "_this_is_not_a_valid_value_")]
         Unknown,
     }
