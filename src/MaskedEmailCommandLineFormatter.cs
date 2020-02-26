@@ -31,6 +31,7 @@ namespace MaskedEmails
             if (command is ChangeMaskedEmailPasswordCommand changeMaskedEmailPasswordCommand)
             {
                 return new[] { $"/usr/local/bin/change-masked-email-password -address {command.Address} -passwordHash {changeMaskedEmailPasswordCommand.PasswordHash} -force", };
+            }
             if (command is SendMailCommand sendMailCommand)
             {
                 return new[] { $"/usr/local/bin/send-email -address {command.Address} -subject {sendMailCommand.Subject} -message {sendMailCommand.Message}", };

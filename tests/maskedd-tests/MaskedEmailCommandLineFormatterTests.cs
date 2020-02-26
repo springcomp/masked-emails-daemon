@@ -60,6 +60,7 @@ namespace maskedd_tests
 
             Assert.AreEqual(1, commandLines.Length);
             Assert.AreEqual("/usr/local/bin/change-masked-email-password -address m123456@domain.com -passwordHash password-hash -force", commandLines[0]);
+        }
 
         [Test]
         public void SendMailCommand_FormatCommandLine()
