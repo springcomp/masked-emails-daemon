@@ -1,5 +1,7 @@
 using MaskedEmails.Commands;
 using NUnit.Framework;
+using System;
+using System.Text;
 
 namespace maskedd_tests
 {
@@ -14,10 +16,10 @@ namespace maskedd_tests
             var text = MaskedEmailCommandJsonConvert.SerializeObject(command);
 
             var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
-            Assert.AreEqual(o.Action, command.Action);
+            Assert.AreEqual(command.Action, o.Action);
+            Assert.AreEqual(command.Address, o.Address);
 
             var c = o as AddMaskedEmailCommand;
-            Assert.AreEqual(command.Address, c.Address);
             Assert.AreEqual(command.PasswordHash, c.PasswordHash);
             Assert.AreEqual(command.AlternateAddress, c.AlternateAddress);
         }
@@ -29,10 +31,11 @@ namespace maskedd_tests
             var text = MaskedEmailCommandJsonConvert.SerializeObject(command);
 
             var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
-            Assert.AreEqual(o.Action, command.Action);
+            Assert.AreEqual(command.Action, o.Action);
+            Assert.AreEqual(command.Address, o.Address);
 
             var c = o as RemoveMaskedEmailCommand;
-            Assert.AreEqual(command.Address, c.Address);
+            Assert.NotNull(c);
         }
         [Test]
         public void EnableMaskedEmail_DeserializeObject()
@@ -42,10 +45,11 @@ namespace maskedd_tests
             var text = MaskedEmailCommandJsonConvert.SerializeObject(command);
 
             var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
-            Assert.AreEqual(o.Action, command.Action);
+            Assert.AreEqual(command.Action, o.Action);
+            Assert.AreEqual(command.Address, o.Address);
 
             var c = o as EnableMaskedEmailCommand;
-            Assert.AreEqual(command.Address, c.Address);
+            Assert.NotNull(c);
         }
         [Test]
         public void DisableMaskedEmail_DeserializeObject()
@@ -55,10 +59,35 @@ namespace maskedd_tests
             var text = MaskedEmailCommandJsonConvert.SerializeObject(command);
 
             var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
-            Assert.AreEqual(o.Action, command.Action);
+            Assert.AreEqual(command.Action, o.Action);
+            Assert.AreEqual(command.Address, o.Address);
 
             var c = o as DisableMaskedEmailCommand;
-            Assert.AreEqual(command.Address, c.Address);
+            Assert.NotNull(c);
+        }
+        [Test]
+        public void SendEmail_DeserializeObject()
+        {
+            var base64 = 
+                Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes("<h1>Title</h1><p>This is the mail body.</p>")
+                );
+
+            var command = new SendMailCommand(
+                    "alice@example.com",
+                    subject: "subject",
+                    message: base64
+                    );
+
+            var text = MaskedEmailCommandJsonConvert.SerializeObject(command);
+
+            var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
+            Assert.AreEqual(command.Action, o.Action);
+            Assert.AreEqual(command.Address, o.Address);
+
+            var c = o as SendMailCommand;
+            Assert.AreEqual(command.Subject, c.Subject);
+            Assert.AreEqual(command.Message, c.Message);
         }
         [Test]
         public void ChangeMaskedEmailPassword_DeserializeObject()
