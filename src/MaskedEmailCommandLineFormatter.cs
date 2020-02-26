@@ -34,11 +34,24 @@ namespace MaskedEmails
             }
             if (command is SendMailCommand sendMailCommand)
             {
-                return new[] { $"/usr/local/bin/send-email -address {command.Address} -subject {sendMailCommand.Subject} -message {sendMailCommand.Message}", };
+                var subject = QuoteBashString(sendMailCommand.Subject);
+                return new[] { $"/usr/local/bin/send-email -address {command.Address} -subject {subject} -message {sendMailCommand.Message}", };
             }
 
             System.Diagnostics.Debug.Assert(false);
             throw new NotImplementedException();
+        }
+
+        private static object QuoteBashString(string text)
+        {
+            var escaped = text
+                .Replace("\\", "\\\\")
+                .Replace("$", "\\$")
+                .Replace("`", "\\`")
+                .Replace("\"", "\\\"")
+                ;
+
+            return $"\"{escaped}\"";
         }
     }
 }

@@ -72,13 +72,14 @@ namespace maskedd_tests
 
             var command = new SendMailCommand(
                 recipient: "alice@example.com",
-                subject: "subject",
+                subject: "A `subject` \\with\\ \"quoted\" $characters",
                 message : base64
                 );
+
             var commandLines = MaskedEmailCommandLineFormatter.Format(command);
 
             Assert.AreEqual(1, commandLines.Length);
-            Assert.AreEqual($"/usr/local/bin/send-email -address alice@example.com -subject subject -message {base64}", commandLines[0]);
+            Assert.AreEqual($"/usr/local/bin/send-email -address alice@example.com -subject \"A \\`subject\\` \\\\with\\\\ \\\"quoted\\\" \\$characters\" -message {base64}", commandLines[0]);
         }
     }
 }
