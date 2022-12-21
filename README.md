@@ -9,9 +9,30 @@ __Warning__: The package available publicly has a connection string to an Azure 
 
 # How-to Install
 
+This package requires the following dependencies:
+
+- [.NET 6.0 Runtime]()
+
+```sh
+sudo apt-get update && \
+  sudo apt-get install -y aspnetcore-runtime-6.0
 ```
-~# wget https://masked.blob.core.windows.net/debian/masked-emails-daemon.deb
-~# dpkg -i masked-emails-daemon.deb
+
+- [Azure Functions Core Tools v4.x]()
+
+```sh
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
+sudo apt-get update && \
+  sudo apt-get install azure-functions-core-tools-4
+```
+
+Installing the package requires the following commands:
+
+```sh
+wget https://masked.blob.core.windows.net/debian/masked-emails-daemon.deb
+dpkg -i masked-emails-daemon.deb
 ```
 
 The daemon attemps to write to `syslog` using UDP.

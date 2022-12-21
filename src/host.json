@@ -12,8 +12,7 @@
             }
         },
         "logLevel": {
-            "Function.Functions": "Debug",
-            "default": "Trace",
+            "default": "Warning",
 
             "Function.ProcessMaskedEmailCommandAsync": "Warning",
             "Function.ProcessMaskedEmailCommandAsync.User": "Trace"

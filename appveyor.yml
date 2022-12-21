@@ -13,6 +13,9 @@ build_script:
   - sh: dotnet publish -c Release /home/appveyor/projects/masked-emails-daemon/src/ --self-contained --runtime linux-x64 --output /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/
 
 after_build:
+
+  - sh: dot2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/masked-runner.sh
+  - sh: chmod +x /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/masked-runner.sh
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/etc/init.d/masked-emails
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/lib/systemd/system/masked-emails.service
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/config
