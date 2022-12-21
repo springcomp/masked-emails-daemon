@@ -1,0 +1,10 @@
+{
+	"IsEncrypted": false,
+	"Values": {
+		"FUNCTIONS_WORKER_RUNTIME": "dotnet",
+		"AzureWebJobsStorage": "UseDevelopmentStorage=true;",
+		"SyslogSettings:MessageTransportProtocol": "Udp",
+		"SyslogSettings:HeaderType": "Rfc5424v1",
+		"SyslogSettings:FacilityType": "Local3"
+	}
+}
