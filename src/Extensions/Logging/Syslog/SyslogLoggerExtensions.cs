@@ -1,17 +1,12 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Syslog.Framework.Logging;
+﻿using Syslog.Framework.Logging;
 
 namespace MaskedEmails.Extensions.Logging.Syslog
 {
     public static class SyslogLoggerExtensions
     {
-        public static ILoggingBuilder AddSyslog(this ILoggingBuilder builder, HostBuilderContext hostContext)
+        public static ILoggingBuilder AddSyslog(this ILoggingBuilder builder, IConfiguration configuration)
         {
-            var configuration = hostContext.Configuration;
-            var section = configuration.GetSection("SyslogSettings");
+            var section = configuration!.GetSection("SyslogSettings");
             if (section != null)
             {
                 var settings = new SyslogLoggerSettings();
@@ -50,11 +45,11 @@ namespace MaskedEmails.Extensions.Logging.Syslog
             if (logLevelSection == null)
                 return false;
 
-            var defaultLogLevel = (string) logLevelSection.GetValue(typeof(string), "Default") ?? "Information";
+            var defaultLogLevel = (string)logLevelSection.GetValue(typeof(string), "Default") ?? "Information";
             if (!Enum.TryParse(typeof(LogLevel), defaultLogLevel, out var parsed))
                 return false;
 
-            level = (LogLevel) parsed;
+            level = (LogLevel)parsed!;
             return true;
         }
 

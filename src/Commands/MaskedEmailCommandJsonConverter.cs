@@ -18,7 +18,7 @@ namespace MaskedEmails.Commands
                 {
                     var command = jObject["command"].Value<string>();
                     if (!TryParseEnum(command, out var action))
-                        return null;
+                        throw new NotSupportedException();
 
                     switch (action)
                     {
@@ -35,7 +35,7 @@ namespace MaskedEmails.Commands
                         case MaskedEmailAction.SendMail:
                             return JsonConvert.DeserializeObject<SendMailCommand>(json);
                         default:
-                            return null;
+                            throw new NotSupportedException();
                     }
                 }
 

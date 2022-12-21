@@ -1,9 +1,6 @@
-﻿using System;
 using System.ComponentModel;
 using MaskedEmails;
 using MaskedEmails.Commands;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
 
 namespace maskedd
 {

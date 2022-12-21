@@ -1,0 +1,22 @@
+{
+    "version": "2.0",
+    "logging": {
+        "applicationInsights": {
+            "samplingSettings": {
+                "isEnabled": true
+            }
+        },
+        "Syslog": {
+            "logLevel": {
+                "Default": "Trace"
+            }
+        },
+        "logLevel": {
+            "Function.Functions": "Debug",
+            "default": "Trace",
+
+            "Function.ProcessMaskedEmailCommandAsync": "Warning",
+            "Function.ProcessMaskedEmailCommandAsync.User": "Trace"
+        }
+    }
+}
