@@ -35,7 +35,8 @@ namespace MaskedEmails
             if (command is SendMailCommand sendMailCommand)
             {
                 var subject = QuoteBashString(sendMailCommand.Subject);
-                return new[] { $"/usr/local/bin/send-email -address {command.Address} -subject {subject} -message {sendMailCommand.Message}", };
+                var senderOptions = sendMailCommand.Sender != null ? $"-sender {QuoteBashString(sendMailCommand.Sender!)} " : "";
+                return new[] { $"/usr/local/bin/send-email {senderOptions}-address {command.Address} -subject {subject} -message {sendMailCommand.Message}", };
             }
 
             System.Diagnostics.Debug.Assert(false);

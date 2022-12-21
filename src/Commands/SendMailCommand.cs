@@ -9,6 +9,7 @@
             Message = message;
         }
 
+        public string? Sender { get; set; }
         public string Subject { get; }
         public string Message { get; }
     }
