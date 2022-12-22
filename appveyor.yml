@@ -15,7 +15,7 @@ build_script:
 after_build:
 
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/maskedd-runner.sh
-  - sh: chmod +x /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/maskedd-runner.sh
+  - sh: chmod 755 /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/opt/masked-emails/daemon/maskedd-runner.sh
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/etc/init.d/masked-emails
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/lib/systemd/system/masked-emails.service
   - sh: dos2unix /home/appveyor/projects/masked-emails-daemon/masked-emails-daemon/DEBIAN/config
