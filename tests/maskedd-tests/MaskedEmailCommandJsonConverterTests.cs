@@ -90,6 +90,25 @@ namespace maskedd_tests
             Assert.AreEqual(command.Message, c.Message);
         }
         [Test]
+        public void SendEmail_DeserializeText()
+        {
+            const string text = @"{
+  ""command"": ""send-email"",
+  ""sender"": ""postmaster@masked-emails.me"",
+  ""address"": ""bob@example.com"",
+  ""subject"": ""a sample email"",
+  ""message"": ""MA=""
+}";
+
+            var o = MaskedEmailCommandJsonConvert.DeserializeObject(text);
+            Assert.AreEqual(MaskedEmailAction.SendMail, o.Action);
+            Assert.AreEqual("bob@example.com", o.Address);
+
+            var c = o as SendMailCommand;
+            Assert.AreEqual("a sample email", c.Subject);
+            Assert.AreEqual("MA=", c.Message);
+        }
+        [Test]
         public void ChangeMaskedEmailPassword_DeserializeObject()
         {
             var command = new ChangeMaskedEmailPasswordCommand("m123456@domain.com"){
